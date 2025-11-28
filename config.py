@@ -20,7 +20,7 @@ class Config:
     DATA_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),"../plugin_data/astrbot_plugin_chunithm_util/"))
 
     @classmethod
-    def update_from_dict(cls, config_dict):
+    def update_from_dict(cls, config_dict:dict):
         """从字典更新类属性"""
         for key, value in config_dict.items():
             if hasattr(cls, key):

@@ -1,10 +1,12 @@
 import requests
 import json
 import os 
+
+from ...config import Config
 url_zetaraku = "https://dp4p6x0xfi5o9.cloudfront.net/chunithm/data.json"
 url_sega = "https://chunithm.sega.jp/storage/json/music.json"
-json_path_zetaraku = os.path.join(os.path.dirname(__file__), '..', '..', 'data', 'data.json')
-json_path_sega = os.path.join(os.path.dirname(__file__), '..', '..', 'data', 'data_new.json')
+json_path_zetaraku = os.path.join(Config.DATA_PATH, Config.SONG_PATH)
+json_path_sega = os.path.join(Config.DATA_PATH, Config.SEGA_SONG_PATH)
 
 def songMeta():
     # zetaraku

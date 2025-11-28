@@ -1,6 +1,7 @@
 import re, os, json
 from bs4 import BeautifulSoup
 
+from ...config import Config
 url = "https://sdvx.in/chunithm/end.htm"
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
@@ -47,7 +48,7 @@ def mapping_we():
     result = {k: v for d in links for k, v in d.items()}
 
     # 写入映射表
-    file_path = os.path.join(os.path.dirname(__file__), '..', '..', 'data', "chartId2Diff_we.json")
+    file_path = os.path.join(Config.DATA_PATH, Config.ID2DIFF_WE_PATH)
     if not os.path.exists(os.path.dirname(file_path)):
         os.makedirs(os.path.dirname(file_path))
     with open(file_path, "w", encoding="utf-8") as f:

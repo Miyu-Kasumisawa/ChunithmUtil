@@ -143,6 +143,7 @@ class ChunithmUtilPlugin(Star):
    #帮助
     @chu.command("help")
     async def chuhelp(self, event:AstrMessageEvent):
+        print(event)
         async for result in queryHelp(event):
             yield result
 
@@ -154,6 +155,7 @@ class ChunithmUtilPlugin(Star):
     #更新数据
     @chu.command("update")
     async def chuupdate(self, event:AstrMessageEvent):
+        print(event)
         async for result in queryUpdate(event):
             yield result
 

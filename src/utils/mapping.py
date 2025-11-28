@@ -1,12 +1,13 @@
 import requests, re, os, json
 from bs4 import BeautifulSoup
 
+from ...config import Config
 base_url = "https://sdvx.in/chunithm/sort/$$.htm"
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
 }
-json_path1 = os.path.join(os.path.dirname(__file__), '..', '..', 'data', 'chartId2Name.json')
-json_path2 = os.path.join(os.path.dirname(__file__), '..', '..', 'data', 'chartId2Gen.json')
+json_path1 = os.path.join(Config.DATA_PATH, Config.ID2NAME_PATH)
+json_path2 = os.path.join(Config.DATA_PATH, Config.ID2GEN_PATH)
 chartid2name = {}   # 存放id和歌曲名的映射表
 chartid2gen = {}    # 存放id和版本号的映射表
 level_list = [

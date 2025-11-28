@@ -140,114 +140,129 @@ class ChunithmUtilPlugin(Star):
     def chu(self):
         pass
 
-    #帮助
+   #帮助
     @chu.command("help")
     async def chuhelp(self, event:AstrMessageEvent):
-        yield queryHelp(event)
+        async for result in queryHelp(event):
+            yield result
 
     #根据定数筛选
     @chu.command("lv")
     async def chulv(self, event:AstrMessageEvent, level:str):
-        yield queryLevel(event, level)
+        await queryLevel(event, level)
 
     #更新数据
     @chu.command("update")
     async def chuupdate(self, event:AstrMessageEvent):
-        yield queryUpdate(event)
+        async for result in queryUpdate(event):
+            yield result
 
     #猜歌管理
     @chu.command("guess")
     async def chuguess(self, event:AstrMessageEvent, arg:str):
         if arg == "bas" or arg == "adv" or arg == "exp" or arg == "mas" or arg == "ult":
-            queryGuess(event, arg, "diff", self.guessgame)
+            async for result in queryGuess(event, arg, "diff", self.guessgame):
+                yield result
         elif arg == "end":
-            queryGuess(event, arg, "end", self.guessgame)
+            async for result in queryGuess(event, arg, "end", self.guessgame):
+                yield result
 
     #猜歌提示
     @chu.command("hint")
     async def chuhint(self, event:AstrMessageEvent):
-        yield queryGuess(event, "", "hint", self.guessgame)
+        async for result in queryGuess(event, "", "hint", self.guessgame):
+            yield result
 
     #迁移游玩数据
     @chu.command("copy")
     async def chucopy(self, event:AstrMessageEvent, server:str):
-        yield queryCopy(event,server)
+        async for result in queryCopy(event,server):
+            yield result
 
-    #迁移游玩数据
+    #绑定账号
     @chu.command("bind")
     async def chubind(self, event:AstrMessageEvent, server:str, token:str):
-        yield queryBind(event,server,token)
-
+        async for result in queryBind(event,server,token):
+            yield result
 
     #猜歌
     @filter.command("guess")
     async def guess(self, event:AstrMessageEvent, arg:str):
-        yield queryGuess(event, arg, "name", self.guessgame)
-
-    
-    
+        async for result in queryGuess(event, arg, "name", self.guessgame):
+            yield result
 
     #模糊搜索音乐
     @filter.custom_filter(MusicSearchFilter)
     async def MusicSearch(self, event:AstrMessageEvent):
         match = re.search(r"^(.+)是什么歌$", event.message_str)
-        if (match == None):
+        if match is None:
             yield event.plain_result("ChunithmUtil:查询条件不能为空")
         else:
-            yield querySong(event, match.group(1))
+            async for result in querySong(event, match.group(1)):
+                yield result
 
     #随机音乐
     @filter.command("chu随机一曲",alias={"chu随机"})
     async def RandomMusic(self, event:AstrMessageEvent):
-        yield queryRdnSong(event)
-        
+        async for result in queryRdnSong(event):
+            yield result
+            
     #添加别名
     @filter.event_message_type(filter.EventMessageType.GROUP_MESSAGE)
     @filter.command("chuset",alias={"添加别名"})
     async def AddAlias(self, event:AstrMessageEvent, cid:str, alias:str):
-        yield queryAddAlias(event, cid, alias)
+        async for result in queryAddAlias(event, cid, alias):
+            yield result
 
     #查询别名
     @filter.command("alias",alias={"别名"})
     async def GetAlias(self, event:AstrMessageEvent, condition:str):
-        yield queryGetAlias(event, condition)
+        async for result in queryGetAlias(event, condition):
+            yield result
 
     #查询容错
     @filter.command("churc",alias={"chu容错"})
     async def Tolerance(self, event:AstrMessageEvent, name:str, difficulty:str):
-        yield queryTolerance(event, name, difficulty)
+        async for result in queryTolerance(event, name, difficulty):
+            yield result
 
     #查询谱面
     @filter.event_message_type(filter.EventMessageType.GROUP_MESSAGE)
     @filter.command("chuchart")
     async def ChuChart(self, event:AstrMessageEvent, name:str, difficulty:str):
-        yield queryChart(event, name, difficulty)
+        async for result in queryChart(event, name, difficulty):
+            yield result
 
     #查询WE谱面
     @filter.event_message_type(filter.EventMessageType.GROUP_MESSAGE)
     @filter.command("wechart")
     async def WeChart(self, event:AstrMessageEvent, name:str, type:str):
-        yield queryChartWE(event, name, type)
+        async for result in queryChartWE(event, name, type):
+            yield result
 
     #查询曲师
     @filter.command("chuqs",alias={"chu曲师"})
     async def ChuArtist(self, event:AstrMessageEvent, artist:str):
-        yield queryArtist(event, artist)
+        async for result in queryArtist(event, artist):
+            yield result
 
     #更新分数
     @filter.command("update")
     async def UpdateScore(self, event:AstrMessageEvent, score: int, name: str, difficulty: str):
-        yield queryUpdScore(event, score, name, difficulty)
+        async for result in queryUpdScore(event, score, name, difficulty):
+            yield result
 
     #b30
     @filter.command("b30")
     async def b30(self, event:AstrMessageEvent, arg:str):
-        yield queryQueryBest(event, arg, "30")
+        async for result in queryQueryBest(event, arg, "30"):
+            yield result
 
     #b50
     @filter.command("b50")
     async def b50(self, event:AstrMessageEvent, arg:str):
-        yield queryQueryBest(event, arg, "50")
+        async for result in queryQueryBest(event, arg, "50"):
+            yield result
 
     """
     @handler(GroupMessageReceived)

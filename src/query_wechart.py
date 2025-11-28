@@ -41,14 +41,14 @@ async def queryChartWE(event: AstrMessageEvent, name: str, type: str):
         yield event.plain_result(f"没有找到{name}，请尝试输入歌曲全称或其他别名")
         return
     else:
-        msg_chain = [Comp.Plain(f"有多个曲目符合条件\n")]
+        msg_chain = [Comp.Plain(f"有多个曲目符合条件\n\u200b")]
         for cid in matched_songs:
             name = None # type: ignore
             for song in songs:
                 if song.get('idx') == cid:
                     name = song.get('title')
                     break
-            msg_chain.append(Comp.Plain(f"c{cid} - {name}\n"))
+            msg_chain.append(Comp.Plain(f"c{cid} - {name}\n\u200b"))
         msg_chain.append(Comp.Plain(f"\n请使用cid进行精准查询"))
         yield event.chain_result(msg_chain) # type: ignore
         return
@@ -76,8 +76,8 @@ async def queryChartWE(event: AstrMessageEvent, name: str, type: str):
         types = [chartutil.extractType(chartutil.getValue(prefix)) for prefix in weprefix if chartutil.getValue(prefix)]
         types = ["· " + t for t in types]
         yield event.chain_result([
-            Comp.Plain(f"c{song.get('idx')} - {song.get('title')}有以下类型WE谱：\n"),
-            Comp.Plain(f"\n".join(types)),
+            Comp.Plain(f"c{song.get('idx')} - {song.get('title')}有以下类型WE谱：\n\u200b"),
+            Comp.Plain(f"\n\u200b".join(types)),
             Comp.Plain(f"\n请指定类型进行查询")
         ])
         return
@@ -92,9 +92,9 @@ async def queryChartWE(event: AstrMessageEvent, name: str, type: str):
             return
         diff = chartutil.extractDiff(chartutil.getValue(weprefix))
         yield event.chain_result([
-            Comp.Plain(f"c{song.get('idx')} - {song.get('title')}\n"),
-            Comp.Plain(f"类型 - {type if type else ''} {'★' * diff}\n"),
-            Comp.Plain(f"Artist - {song.get('artist')}\n"),
+            Comp.Plain(f"c{song.get('idx')} - {song.get('title')}\n\u200b"),
+            Comp.Plain(f"类型 - {type if type else ''} {'★' * diff}\n\u200b"),
+            Comp.Plain(f"Artist - {song.get('artist')}\n\u200b"),
             img_conponent
         ])
         return

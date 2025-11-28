@@ -71,7 +71,7 @@ def searchSong(name: str) -> list[str]:
     cids = list(set(cids))
     return cids
     
-def querySong(event: AstrMessageEvent, arg: str):
+async def querySong(event: AstrMessageEvent, arg: str):
     '''回复歌曲查询结果
     
     Args:
@@ -99,14 +99,14 @@ def querySong(event: AstrMessageEvent, arg: str):
         
         img_conponent = Comp.Image(os.path.join(COVER_CACHE_DIR, song.get('img') + ".webp"))
         msg_chain = [
-            Comp.Plain(f"c{cid} - {song.get('title')}\n"),
-            Comp.Plain(f"曲师: {song.get('artist')}\n"),
-            Comp.Plain(f"分类：{song.get('genre')}\n"),
-            Comp.Plain(f"BPM: {song.get('bpm')}\n"),
-            Comp.Plain(f"追加版本: {song.get('version')}\n"),
-            Comp.Plain(f"发行日期: {calcDate(song.get('release'))}\n"),
+            Comp.Plain(f"c{cid} - {song.get('title')}\n\u200b"),
+            Comp.Plain(f"曲师: {song.get('artist')}\n\u200b"),
+            Comp.Plain(f"分类：{song.get('genre')}\n\u200b"),
+            Comp.Plain(f"BPM: {song.get('bpm')}\n\u200b"),
+            Comp.Plain(f"追加版本: {song.get('version')}\n\u200b"),
+            Comp.Plain(f"发行日期: {calcDate(song.get('release'))}\n\u200b"),
             Comp.Plain(f"定数: "),
-            Comp.Plain(f"{' / '.join(constants)}\n"),
+            Comp.Plain(f"{' / '.join(constants)}\n\u200b"),
             img_conponent
             ] 
         msg_chain.append(img_conponent)
@@ -114,14 +114,14 @@ def querySong(event: AstrMessageEvent, arg: str):
         return
     
     elif len(matched_songs) > 1:
-        msg_chain = [Comp.Plain(f"有多个曲目符合条件\n")]
+        msg_chain = [Comp.Plain(f"有多个曲目符合条件\n\u200b")]
         for cid in matched_songs:
             name = None
             for song in songs:
                 if song.get('idx') == cid:
                     name = song.get('title')
                     break
-            msg_chain.append(Comp.Plain(f"c{cid} - {name}\n"))
+            msg_chain.append(Comp.Plain(f"c{cid} - {name}\n\u200b"))
         msg_chain.append(Comp.Plain(f"\n请使用cid进行精准查询"))
         yield event.chain_result(msg_chain) # type: ignore
         return
@@ -143,12 +143,12 @@ def querySong(event: AstrMessageEvent, arg: str):
             
             img = Comp.Image(os.path.join(COVER_CACHE_DIR, matched_song.get('image')))
             yield event.chain_result([
-                Comp.Plain(f"新曲 - {matched_song.get('title')}\n"),
-                Comp.Plain(f"by {matched_song.get('artist')}\n"),
-                Comp.Plain(f"Basic {matched_song.get('lev_bas')}\n"),
-                Comp.Plain(f"Advanced {matched_song.get('lev_adv')}\n"),
-                Comp.Plain(f"Expert {matched_song.get('lev_exp')}\n"),
-                Comp.Plain(f"Master {matched_song.get('lev_mas')}\n"),
+                Comp.Plain(f"新曲 - {matched_song.get('title')}\n\u200b"),
+                Comp.Plain(f"by {matched_song.get('artist')}\n\u200b"),
+                Comp.Plain(f"Basic {matched_song.get('lev_bas')}\n\u200b"),
+                Comp.Plain(f"Advanced {matched_song.get('lev_adv')}\n\u200b"),
+                Comp.Plain(f"Expert {matched_song.get('lev_exp')}\n\u200b"),
+                Comp.Plain(f"Master {matched_song.get('lev_mas')}\n\u200b"),
                 Comp.Plain(f"Ultima {matched_song.get('lev_ult', '-')}" if matched_song.get('lev_ult')!="" else ""),
                 img,
             ])

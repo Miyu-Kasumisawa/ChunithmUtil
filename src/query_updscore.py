@@ -56,14 +56,14 @@ async def queryUpdScore(event: AstrMessageEvent, score: int, name: str, difficul
         yield event.plain_result("没有找到该歌曲，试着输入歌曲全称或其他别名")
         return
     elif len(cids) > 1:
-        msg_chain = [Comp.Plain(f"有多个曲目符合条件\n")]
+        msg_chain = [Comp.Plain(f"有多个曲目符合条件\n\u200b")]
         for cid in cids:
             name = None # type: ignore
             for song in songs:
                 if song.get('idx') == cid:
                     name = song.get('title')
                     break
-            msg_chain.append(Comp.Plain(f"c{cid} - {name}\n"))
+            msg_chain.append(Comp.Plain(f"c{cid} - {name}\n\u200b"))
         msg_chain.append(Comp.Plain(f"\n请使用cid进行精准查询"))
         yield event.chain_result(msg_chain) # type: ignore
         return

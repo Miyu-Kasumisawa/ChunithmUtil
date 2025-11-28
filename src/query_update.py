@@ -26,9 +26,9 @@ async def queryUpdate(event: AstrMessageEvent):
         if len(diff) > 20:
             msg_chain.append(Comp.Plain(f"，新增曲目过多，仅展示前20首"))
         if len(diff) != 0:
-            msg_chain.append(Comp.Plain(f"，新增曲目：\n"))
+            msg_chain.append(Comp.Plain(f"，新增曲目：\n\u200b"))
             for song in diff[::-1][ : min(20, len(diff))]:
-                msg_chain.append(Comp.Plain(f"· {song.get('songId')}\n"))
+                msg_chain.append(Comp.Plain(f"· {song.get('songId')}\n\u200b"))
         yield event.chain_result(msg_chain) # type: ignore
     
     except subprocess.CalledProcessError as e:

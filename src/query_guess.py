@@ -143,14 +143,14 @@ async def queryGuess(event: AstrMessageEvent, arg: str, pattern: str, guessgame:
                 yield event.plain_result(f"没有找到{name}，请尝试输入歌曲全称或其他别名")
                 return
             else:
-                msg_chain = [Comp.Plain(f"有多个曲目符合条件\n")]
+                msg_chain = [Comp.Plain(f"有多个曲目符合条件\n\u200b")]
                 for cid in matched_songs:
                     name = None
                     for song in songs:
                         if song.get('idx') == cid:
                             name = song.get('title')
                             break
-                    msg_chain.append(Comp.Plain(f"c{cid} - {name}\n"))
+                    msg_chain.append(Comp.Plain(f"c{cid} - {name}\n\u200b"))
                 msg_chain.append(Comp.Plain(f"\n请使用cid进行精准查询"))
                 yield event.chain_result(msg_chain) # type: ignore
                 return
@@ -202,7 +202,7 @@ async def queryGuess(event: AstrMessageEvent, arg: str, pattern: str, guessgame:
             
             hint = random.choice(hints)
             yield event.chain_result([
-                Comp.Plain("提示🌟\n"),
+                Comp.Plain("提示🌟\n\u200b"),
                 Comp.Plain(hint)
             ])
             return

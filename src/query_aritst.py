@@ -40,15 +40,15 @@ async def queryArtist(event: AstrMessageEvent, artist: str):
     elif len(matched_artists) == 1:
         artist_name = matched_artists[0]
         songs_by_artist = songutil.getSongsByArtist(artist_name, songs)
-        msg_chain = [Comp.Plain(f"曲师 - {artist_name}作品列表：\n")]
+        msg_chain = [Comp.Plain(f"曲师 - {artist_name}作品列表：\n\u200b")]
         for song in songs_by_artist:
-            msg_chain.append(Comp.Plain(f"· c{song.get('idx')} - {song.get('title')}\n"))
+            msg_chain.append(Comp.Plain(f"· c{song.get('idx')} - {song.get('title')}\n\u200b"))
         yield event.chain_result(msg_chain) # type: ignore
     
     else:
-        msg_chain = [Comp.Plain(f"有多个曲师符合条件\n")]
+        msg_chain = [Comp.Plain(f"有多个曲师符合条件\n\u200b")]
         for artist in matched_artists:
-            msg_chain.append(Comp.Plain(f"· {artist}\n"))
+            msg_chain.append(Comp.Plain(f"· {artist}\n\u200b"))
         msg_chain.append(Comp.Plain(f"\n请使用“chu曲师 [曲师全名]”进行查询"))
         yield event.chain_result(msg_chain) # type: ignore
     return

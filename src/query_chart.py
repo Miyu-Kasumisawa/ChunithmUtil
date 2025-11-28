@@ -50,14 +50,14 @@ async def queryChart(event: AstrMessageEvent, name: str, difficulty: str):
         yield event.plain_result(f"没有找到{name}，请尝试输入歌曲全称或其他别名")
         return
     else:
-        msg_chain = [Comp.Plain(f"有多个曲目符合条件\n")]
+        msg_chain = [Comp.Plain(f"有多个曲目符合条件\n\u200b")]
         for cid in matched_songs:
             name = None # type: ignore
             for song in songs:
                 if song.get('idx') == cid:
                     name = song.get('title')
                     break
-            msg_chain.append(Comp.Plain(f"c{cid} - {name}\n"))
+            msg_chain.append(Comp.Plain(f"c{cid} - {name}\n\u200b"))
         msg_chain.append(Comp.Plain(f"\n请使用cid进行精准查询"))
         yield event.chain_result(msg_chain) # type: ignore
         return
@@ -87,10 +87,10 @@ async def queryChart(event: AstrMessageEvent, name: str, difficulty: str):
             yield event.plain_result(f"未找到歌曲对应谱面，可能是内部错误或数据未更新")
             return
         yield event.chain_result([
-            Comp.Plain(f"c{cid} - {song.get('title')}\n"),
-            Comp.Plain(f"难度 - {difficulty}\n"),
-            Comp.Plain(f"Artist - {song.get('artist')}\n"),
-            Comp.Plain(f"BPM - {song.get('bpm')}\n"),
+            Comp.Plain(f"c{cid} - {song.get('title')}\n\u200b"),
+            Comp.Plain(f"难度 - {difficulty}\n\u200b"),
+            Comp.Plain(f"Artist - {song.get('artist')}\n\u200b"),
+            Comp.Plain(f"BPM - {song.get('bpm')}\n\u200b"),
             Comp.Plain(f"Notes - {song.get('notes')}"),
             img_conponent
         ])

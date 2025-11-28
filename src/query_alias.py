@@ -38,15 +38,15 @@ async def queryAddAlias(event: AstrMessageEvent, cid: str, alias: str):
         songs = []
         with open(SONGS_PATH, 'r', encoding='utf-8-sig') as f:
             songs = json.load(f)
-        msg_chain = [Comp.Plain(f"有多个曲目符合条件\n")]
+        msg_chain = [Comp.Plain(f"有多个曲目符合条件\n\u200b")]
         for cid in matched_songs:
             name = None
             for song in songs:
                 if song.get('idx') == cid:
                     name = song.get('title')
                     break
-            msg_chain.append(Comp.Plain(f"c{cid} - {name}\n"))
-        msg_chain.append(Comp.Plain(f"\n请使用cid进行精准查询"))
+            msg_chain.append(Comp.Plain(f"c{cid} - {name}\n\u200b"))
+        msg_chain.append(Comp.Plain(f"\u200b\n请使用cid进行精准查询"))
         yield event.chain_result(msg_chain) # type: ignore
         return
     
@@ -80,11 +80,11 @@ async def queryAddAlias(event: AstrMessageEvent, cid: str, alias: str):
     })
     
     yield event.chain_result([
-        Comp.Plain(f"c{cid} - {name}的别名：{', '.join(valid_aliases)}添加成功\n")
+        Comp.Plain(f"c{cid} - {name}的别名：{', '.join(valid_aliases)}添加成功\n\u200b")
         if len(valid_aliases) > 0 else Comp.Plain(""),
         Comp.Plain(f"c{cid} - {name}的别名：{', '.join(invalid_aliases)}已存在")
         if len(invalid_aliases) > 0 else Comp.Plain(""),
-        Comp.Plain("\n添加歌曲别名将记录在日志中")
+        Comp.Plain("\u200b\n添加歌曲别名将记录在日志中")
     ])
 
 async def queryGetAlias(event: AstrMessageEvent, condition: str):
@@ -105,15 +105,15 @@ async def queryGetAlias(event: AstrMessageEvent, condition: str):
         yield event.plain_result("未找到该歌曲，试着输入歌曲全称或其他别名")
         return
     elif len(matched_songs) > 1:
-        msg_chain = [Comp.Plain(f"有多个曲目符合条件\n")]
+        msg_chain = [Comp.Plain(f"有多个曲目符合条件\n\u200b")]
         for cid in matched_songs:
             name = None
             for song in songs:
                 if song.get('idx') == cid:
                     name = song.get('title')
                     break
-            msg_chain.append(Comp.Plain(f"c{cid} - {name}\n"))
-        msg_chain.append(Comp.Plain(f"\n请使用cid进行精准查询"))
+            msg_chain.append(Comp.Plain(f"c{cid} - {name}\n\u200b"))
+        msg_chain.append(Comp.Plain(f"\u200b\n请使用cid进行精准查询"))
         yield event.chain_result(msg_chain) # type: ignore
         return
     
@@ -136,8 +136,8 @@ async def queryGetAlias(event: AstrMessageEvent, condition: str):
     
     msg_chain = [Comp.Plain(f"c{cid} - {name}的别名：")]
     for alias in aliases:
-        msg_chain.append(Comp.Plain(f"\n· {alias}"))
-    msg_chain.append(Comp.Plain(f"\n别名均为用户添加，与BOT无关"))
+        msg_chain.append(Comp.Plain(f"\u200b\n· {alias}"))
+    msg_chain.append(Comp.Plain(f"\u200b\n别名均为用户添加，与BOT无关"))
     yield event.chain_result(msg_chain) # type: ignore
 
 async def queryDelAlias(event: AstrMessageEvent, args: list) -> None:

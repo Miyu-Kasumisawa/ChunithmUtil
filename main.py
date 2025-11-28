@@ -179,7 +179,8 @@ class ChunithmUtilPlugin(Star):
 
     
     #模糊搜索音乐自定义筛选函数
-    def MusicSearchFilterFunc(self, event:AstrMessageEvent, cfg: AstrBotConfig) -> bool:
+    @staticmethod
+    def MusicSearchFilterFunc(event:AstrMessageEvent, cfg: AstrBotConfig) -> bool:
         if (re.match(r"^(.+)是什么歌$",event.message_str)):
             return True
         else:

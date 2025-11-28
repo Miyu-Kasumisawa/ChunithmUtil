@@ -21,7 +21,7 @@ numpy
 packaging
 pillow
 playwright
-propcache=
+propcache
 pyee
 regex
 requests
@@ -30,4 +30,5 @@ soupsieve
 typing_extensions
 urllib3
 yarl
+
 

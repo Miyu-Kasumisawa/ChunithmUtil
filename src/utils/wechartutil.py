@@ -9,7 +9,7 @@ import aiofiles
 import asyncio
 import httpx
 
-from ...main import Config
+from ...config import Config
 from .searcher import *
 from .apicaller import *
 from .songutil import *

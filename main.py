@@ -51,7 +51,7 @@ class ChunithmUtilPlugin(Star):
     # 插件加载时触发
     def __init__(self, context: Context):
         #初始化配置
-        Config.update_from_dict(self.context.get_config().values())
+        Config.update_from_dict(context.get_config().values())
         #检查内置别名列表是否复制到数据路径&检查数据目录是否存在
         if not os.path.exists(os.path.join(Config.DATA_PATH,Config.ALIAS_PATH)):
             if not os.path.exists(os.path.join(Config.DATA_PATH,"data")):
